@@ -16,9 +16,9 @@ class CreateMstChucVuTable extends Migration
         Schema::create('mst_chuc_vu', function (Blueprint $table) {
             $table->bigIncrements('cv_id');
             $table->string('cv_ten', 50)->comment('Tên chức vụ');
-            $table->tinyInteger('cv_xoa')->default('1')->comment('Xóa chức vụ # 1: chưa xóa, 2: đã xóa');
             $table->unique(['cv_ten']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

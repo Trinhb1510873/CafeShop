@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMstBoPhanTable extends Migration
+class CreateMstNhomNguyenVatLieuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateMstBoPhanTable extends Migration
      */
     public function up()
     {
-        Schema::create('mst_bo_phan', function (Blueprint $table) {
+        Schema::create('mst_nhom_nguyen_vat_lieu', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->bigIncrements('bp_id')->comment('Mã bộ phận');
-            $table->string('bp_ten', 50)->comment('Tên bộ phận');
-            $table->unique(['bp_ten']);
+            $table->bigIncrements('nnvl_id')->comment('Mã nhom_nguyen_vat_lieu');
+            $table->string('nnvl_ten', 100)->comment('Tên nhom_nguyen_vat_lieu');
+            $table->unique(['nnvl_ten']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ class CreateMstBoPhanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mst_bo_phan');
+        Schema::dropIfExists('mst_nhom_nguyen_vat_lieu');
     }
 }

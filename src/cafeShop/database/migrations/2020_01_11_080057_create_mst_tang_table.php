@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMstLoaiMonAnTable extends Migration
+class CreateMstTangTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateMstLoaiMonAnTable extends Migration
      */
     public function up()
     {
-        Schema::create('mst_loai_mon_an', function (Blueprint $table) {
-            $table->bigIncrements('lma_id')->comment('Mã loại món ăn');
-            $table->string('lma_ten', 50)->comment('Tên loại # Tên loại món ăn');
+        Schema::create('mst_tang', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->bigIncrements('t_id')->comment('Mã tầng');
+            $table->string('t_ten', 50)->comment('Tên tầng');
+            $table->unique(['t_ten']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +30,6 @@ class CreateMstLoaiMonAnTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mst_loai_mon_an');
+        Schema::dropIfExists('mst_tang');
     }
 }
