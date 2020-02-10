@@ -12,7 +12,7 @@ class NhomThucDonTableSeeder extends Seeder
     public function run()
     {
         $list = [];
-        $ten = ["Thức ăn nhanh", "Món ăn", "Nước uống"];
+        $ten = ["Cơm", "Bún", "Mì", "Hủ tiếu", "Bánh mì", "Nước uống đóng chai", "Sinh tố", "Nước ép", "Trà sữa", "Cà phê"];
         $faker = Faker\Factory:: create('vi_VN');
 
         $bep = DB::select('SELECT b_id FROM mst_bep');
