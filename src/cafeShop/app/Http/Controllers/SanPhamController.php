@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MonAnController extends Controller
+class SanPhamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class MonAnController extends Controller
      */
     public function index()
     {
-        $ds_monan = SanPham::all();
+        //
     }
 
     /**

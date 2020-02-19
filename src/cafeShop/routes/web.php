@@ -18,4 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/admin/danhsachmonan', 'MonAnController');
+Route::resource('/admin/danhsachmonan', 'Backend\MonAnController');
+Route::resource('/admin/danhsachloaimonan', 'Backend\LoaiMonAnController');
+Route::resource('/admin/danhsachdonvitinh', 'Backend\DonViTinhController');
+Route::resource('/admin/danhsachbep', 'Backend\BepController');
+Route::resource('/admin/danhsachnhomthucdon', 'Backend\NhomThucDonController');
