@@ -39,6 +39,14 @@ class BepController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'b_ten' => 'required|min:3|max:50',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachbep.create'))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $b = new Bep();
         $b->b_ten = $request->b_ten;
         $b->save();
@@ -79,6 +87,14 @@ class BepController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'b_ten' => 'required|min:3|max:50',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachbep.edit', ['danhsachbep' => $id]))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $b = Bep::where("b_id",  $id)->first();
         $b->b_ten = $request->b_ten;
         $b->save();

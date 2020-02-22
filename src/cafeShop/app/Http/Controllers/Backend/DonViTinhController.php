@@ -39,6 +39,15 @@ class DonViTinhController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $validator = Validator::make($request->all(), [
+            'dvt_ten' => 'required|min:3|max:50',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachdonvitinh.create'))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $dvt = new DonViTinh();
         $dvt->dvt_ten = $request->dvt_ten;
         $dvt->save();
@@ -79,6 +88,14 @@ class DonViTinhController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'dvt_ten' => 'required|min:3|max:50',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachdonvitinh.edit', ['danhsachdonvitinh' => $id]))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $dvt = donvitinh::where("dvt_id",  $id)->first();
         $dvt->dvt_ten = $request->dvt_ten;
         $dvt->save();

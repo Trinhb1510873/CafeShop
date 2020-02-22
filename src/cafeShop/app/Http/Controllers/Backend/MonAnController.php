@@ -56,6 +56,18 @@ class MonAnController extends Controller
             // Cú pháp dùng upload nhiều file
             'ma_hinhanhlienquan.*' => 'file|image|mimes:jpeg,png,gif,webp|max:2048'
         ]);
+        $validator = Validator::make($request->all(), [
+            'ma_ten' => 'required|min:3|max:50',
+            'ma_dienGiai' => 'required|min:3|max:1000',
+            'ma_giaBan' => 'required|digits:4',
+            'ma_giaVon' => 'required|digits:4',
+            
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachmonan.create'))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $ma = new MonAn();
         $ma->ma_ten = $request->ma_ten;
         $ma->ma_dienGiai = $request->ma_dienGiai;
@@ -96,7 +108,10 @@ class MonAnController extends Controller
      */
     public function show($id)
     {
-        //
+        $ma = MonAn::where("ma_id",  $id)->first();
+//        print_r($ma);die;
+        return view('backend.monan.show')
+                ->with('ma', $ma);
     }
 
     /**
@@ -130,6 +145,18 @@ class MonAnController extends Controller
             // Cú pháp dùng upload nhiều file
             'ma_hinhanhlienquan.*' => 'file|image|mimes:jpeg,png,gif,webp|max:2048'
         ]);
+        $validator = Validator::make($request->all(), [
+            'ma_ten' => 'required|min:3|max:50',
+            'ma_dienGiai' => 'required|min:3|max:1000',
+            'ma_giaBan' => 'required|digits:4',
+            'ma_giaVon' => 'required|digits:4',
+            
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachmonan.edit', ['danhsachmonan' => $id]))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $ma = MonAn::where("ma_id",  $id)->first();
         $ma->ma_ten = $request->ma_ten;
         $ma->ma_dienGiai = $request->ma_dienGiai;
