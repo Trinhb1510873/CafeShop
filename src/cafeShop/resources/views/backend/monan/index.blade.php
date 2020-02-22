@@ -47,7 +47,7 @@ Danh sách Món Ăn
                 <td width='10%'>{{ $ma->ma_ten}}</td>
                 <td width='20%'>{{ $ma->ma_dienGiai}}</td>
                 <td>{{ $ma->ma_giaBan}}</td>
-                <td width='20%'>{{ $ma->ma_hinh }}</td>
+                <td width='20%'><img width='100px' src="{{ asset('storage/photos/' .  $ma->ma_hinh ) }}" class="img-list" /></td>
                 <td width='10%'>{{ $ma->donViTinh->dvt_ten}}</td>
                 <td width='10%'>{{ $ma->nhomThucDon->ntd_ten}}</td>
                 <td>

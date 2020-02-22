@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Backend;
 
 use App\DonViTinh;
+use App\HinhAnh;
 use App\Http\Controllers\Controller;
 use App\MonAn;
 use App\NhomThucDon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use function redirect;
 use function view;
 
 class MonAnController extends Controller
@@ -33,9 +37,9 @@ class MonAnController extends Controller
     {
         $ds_ntd = NhomThucDon::all();
         $ds_dvt = DonViTinh::all();
-        return view(backend.monan.create)
+        return view('backend.monan.create')
                 ->with('danhsachntd', $ds_ntd)
-                ->with('danhsacdvt', $ds_dvt);
+                ->with('danhsachdvt', $ds_dvt);
                
     }
 
@@ -47,7 +51,41 @@ class MonAnController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $request->validate([
+            'ma_hinh' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
+            // Cú pháp dùng upload nhiều file
+            'ma_hinhanhlienquan.*' => 'file|image|mimes:jpeg,png,gif,webp|max:2048'
+        ]);
+        $ma = new MonAn();
+        $ma->ma_ten = $request->ma_ten;
+        $ma->ma_dienGiai = $request->ma_dienGiai;
+        $ma->ma_giaBan = $request->ma_giaBan;
+        $ma->ma_giaVon = $request->ma_giaVon;
+        $ma->ma_mon_dac_trung = $request->ma_mon_dac_trung;
+        $ma->ma_thay_doi_theo_thoi_gia = $request->ma_thay_doi_theo_thoi_gia;
+        $ma->ma_ngung_ban = $request->ma_ngung_ban;
+        $ma->id_don_vi_tinh = $request->id_don_vi_tinh;
+        $ma->id_nhom_thuc_don = $request->id_nhom_thuc_don;
+        if ($request->hasFile('ma_hinh')) {
+            $file = $request->ma_hinh;
+            $ma->ma_hinh = $file->getClientOriginalName();
+            $fileSaved = $file->storeAs('public/photos', $ma->ma_hinh);
+        }
+        $ma->save();
+        if($request->hasFile('ma_hinhanhlienquan')) {
+            $files = $request->ma_hinhanhlienquan;
+            foreach ($request->ma_hinhanhlienquan as $index => $file) {
+                $file->storeAs('public/photos', $file->getClientOriginalName());
+                $hinhAnh = new HinhAnh();
+                $hinhAnh->id_mon_an = $ma->ma_id;
+                $hinhAnh->ha_ten = $file->getClientOriginalName();
+                $hinhAnh->save();
+            }
+        }
+        Session::flash('alert-info', 'Them moi thanh cong ^^~!!!');
+        return redirect()->route('danhsachmonan.index');
+
+        
     }
 
     /**
@@ -69,7 +107,13 @@ class MonAnController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ma = MonAn::where("ma_id",  $id)->first();
+        $ds_ntd = NhomThucDon::all();
+        $ds_dvt = DonViTinh::all();
+        return view('backend.monan.edit')
+                ->with('ma', $ma)
+                ->with('danhsachntd', $ds_ntd)
+                ->with('danhsachdvt', $ds_dvt);
     }
 
     /**
@@ -81,9 +125,48 @@ class MonAnController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validation = $request->validate([
+            'ma_hinh' => 'file|image|mimes:jpeg,png,gif,webp|max:2048',
+            // Cú pháp dùng upload nhiều file
+            'ma_hinhanhlienquan.*' => 'file|image|mimes:jpeg,png,gif,webp|max:2048'
+        ]);
+        $ma = MonAn::where("ma_id",  $id)->first();
+        $ma->ma_ten = $request->ma_ten;
+        $ma->ma_dienGiai = $request->ma_dienGiai;
+        $ma->ma_giaBan = $request->ma_giaBan;
+        $ma->ma_giaVon = $request->ma_giaVon;
+        $ma->ma_mon_dac_trung = $request->ma_mon_dac_trung;
+        $ma->ma_thay_doi_theo_thoi_gia = $request->ma_thay_doi_theo_thoi_gia;
+        $ma->ma_ngung_ban = $request->ma_ngung_ban;
+        $ma->id_don_vi_tinh = $request->id_don_vi_tinh;
+        $ma->id_nhom_thuc_don = $request->id_nhom_thuc_don;
+        
+        if($request->hasFile('ma_hinh')){
+            Storage::delete('public/photos/' . $ma->ma_hinh);
+            $file = $request->ma_hinh;
+            $ma->ma_hinh = $file->getClientOriginalName();
+            $fileSaved = $file->storeAs('public/photos', $ma->ma_hinh);
+        }
+        if($request->hasFile('ma_hinhanhlienquan')){
+            foreach($ma->hinhAnh()->get() as $hinhAnh){
+                Storage::delete('public/photos/' . $hinhAnh->ha_ten);
+                $hinhAnh->delete(); 
+            }
+            $files = $request->ma_hinhanhlienquan;
+            foreach ($request->ma_hinhanhlienquan as $index => $file){
+                $file->storeAs('public/photos', $file->getClientOriginalName());
+                // Tạo đối tưọng HinhAnh
+                $hinhAnh = new HinhAnh();
+                $hinhAnh->id_mon_an = $ma->ma_id;
+                $hinhAnh->ha_ten = $file->getClientOriginalName();
+                $hinhAnh->save();
+            }
+        }
+        $ma->save();
+        Session::flash('alert-info', 'Cập nhật thành công ^^~!!!');
+        return redirect()->route('danhsachmonan.index');
+        
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -92,6 +175,23 @@ class MonAnController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ma = MonAn::where("ma_id",  $id)->first();
+        if(empty($ma) == false)
+        {
+            // DELETE các dòng liên quan trong table `HinhAnh`
+            foreach($ma->hinhAnh()->get() as $hinhAnh)
+            {
+                // Xóa hình cũ để tránh rác
+                Storage::delete('public/photos/' . $hinhAnh->ha_ten);
+                // Xóa record
+                $hinhAnh->delete();
+            }
+            // Xóa hình cũ để tránh rác
+            Storage::delete('public/photos/' . $ma->ma_hinh);
+        }
+        $ma->delete();
+        Session::flash('alert-info', 'Xóa món ăn thành công ^^~!!!');
+        return redirect()->route('danhsachmonan.index');
+
     }
 }

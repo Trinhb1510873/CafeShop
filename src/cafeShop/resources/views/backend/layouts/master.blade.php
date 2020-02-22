@@ -16,7 +16,7 @@
         }
     </style>    
 
-    <title>Sunshine | @yield('title')</title>
+    <title>Hoa Hướng Dương | @yield('title')</title>
 
     <!-- Các custom style dành riêng cho từng view -->
     @yield('custom-css')

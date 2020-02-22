@@ -19,6 +19,6 @@ class MonAn extends Model
     }
 
     public function hinhAnh(){
-        return $this->hasMany('App\HinhAnh', 'ma_id', 'id_mon_an');
+        return $this->hasMany('App\HinhAnh', 'id_mon_an', 'ma_id');
     }
 }
