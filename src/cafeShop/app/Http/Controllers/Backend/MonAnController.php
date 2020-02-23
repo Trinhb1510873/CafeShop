@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use function redirect;
 use function view;
+use Validator;
+use App\Exports\SanPhamExport;
+use Maatwebsite\Excel\Facades\Excel as Excel;
 
 class MonAnController extends Controller
 {
@@ -59,8 +62,8 @@ class MonAnController extends Controller
         $validator = Validator::make($request->all(), [
             'ma_ten' => 'required|min:3|max:50',
             'ma_dienGiai' => 'required|min:3|max:1000',
-            'ma_giaBan' => 'required|digits:4',
-            'ma_giaVon' => 'required|digits:4',
+            'ma_giaBan' => 'required|numeric',
+            'ma_giaVon' => 'required|numeric',
             
         ]);
         if ($validator->fails()) {
@@ -148,8 +151,8 @@ class MonAnController extends Controller
         $validator = Validator::make($request->all(), [
             'ma_ten' => 'required|min:3|max:50',
             'ma_dienGiai' => 'required|min:3|max:1000',
-            'ma_giaBan' => 'required|digits:4',
-            'ma_giaVon' => 'required|digits:4',
+            'ma_giaBan' => 'required|numeric',
+            'ma_giaVon' => 'required|numeric',
             
         ]);
         if ($validator->fails()) {
@@ -193,6 +196,28 @@ class MonAnController extends Controller
         Session::flash('alert-info', 'Cập nhật thành công ^^~!!!');
         return redirect()->route('danhsachmonan.index');
         
+    }
+    public function prints()
+    {
+        $ds_monan = MonAn::all();
+        $ds_ntd = NhomThucDon::all();
+        $ds_dvt = DonViTinh::all();
+        return view('backend.monan.print')
+                ->with('danhsachmonan', $ds_monan)
+                ->with('danhsachntd', $ds_ntd)
+                ->with('danhsachdvt', $ds_dvt);
+    }
+    public function excel() 
+    {
+        /* Code dành cho việc debug
+    - Khi debug cần hiển thị view để xem trước khi Export Excel
+    */
+    // $ds_sanpham = Sanpham::all();
+    // $ds_loai    = Loai::all();
+    // return view('sanpham.excel')
+    //     ->with('danhsachsanpham', $ds_sanpham)
+    //     ->with('danhsachloai', $ds_loai);
+        return Excel::download(new SanPhamExport, 'danhsachmonan.xlsx');
     }
     /**
      * Remove the specified resource from storage.

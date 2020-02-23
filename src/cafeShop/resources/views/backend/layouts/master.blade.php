@@ -16,7 +16,7 @@
         }
     </style>    
 
-    <title>Hoa Hướng Dương | @yield('title')</title>
+    <title>Sunflower | @yield('title')</title>
 
     <!-- Các custom style dành riêng cho từng view -->
     @yield('custom-css')

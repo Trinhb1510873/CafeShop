@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\DonViTinh;
+use Validator;
 
 class DonViTinhController extends Controller
 {

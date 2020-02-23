@@ -48,7 +48,7 @@ class BanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ban_ten' => 'required|min:3|max:100',
-            'ban_soLuong' => 'required|digits:1',
+            'ban_soLuong' => 'required|numeric',
         ]);
         if ($validator->fails()) {
             return redirect(route('danhsachban.create'))
@@ -102,7 +102,7 @@ class BanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ban_ten' => 'required|min:3|max:100',
-            'ban_soLuong' => 'required|digits:1',
+            'ban_soLuong' => 'required|numeric',
         ]);
         if ($validator->fails()) {
             return redirect(route('danhsachban.edit', ['danhsachban' => $id]))

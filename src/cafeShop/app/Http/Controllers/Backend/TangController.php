@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use function redirect;
 use function view;
+use Validator;
+
 
 class TangController extends Controller
 {
@@ -42,6 +44,14 @@ class TangController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            't_ten' => 'required|min:3|max:50',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachtang.create'))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $t = new Tang();
         $t->t_ten = $request->t_ten;
         $t->save();
@@ -82,6 +92,14 @@ class TangController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            't_ten' => 'required|min:3|max:50',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachtang.edit', ['danhsachtang' => $id]))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $t = Tang::where("t_id",  $id)->first();
         $t->t_ten = $request->t_ten;
         $t->save();

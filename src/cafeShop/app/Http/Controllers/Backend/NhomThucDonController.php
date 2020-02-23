@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use function redirect;
 use function view;
+use Validator;
 
 class NhomThucDonController extends Controller
 {
@@ -49,6 +50,15 @@ class NhomThucDonController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'ntd_ten' => 'required|min:3|max:100',
+            'ntd_dienGiai' =>'required|min:1|max:1000',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachnhomthucdon.create'))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $ntd = new NhomThucDon();
         $ntd->ntd_ten = $request->ntd_ten;
         $ntd->ntd_dienGiai = $request->ntd_dienGiai;
@@ -98,6 +108,15 @@ class NhomThucDonController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'ntd_ten' => 'required|min:3|max:100',
+            'ntd_dienGiai' =>'required|min:1|max:1000',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('danhsachnhomthucdon.edit', ['danhsachnhomthucdon' => $id]))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $ntd  = NhomThucDon::where("ntd_id",  $id)->first();
         $ntd->ntd_ten = $request->ntd_ten;
         $ntd->ntd_dienGiai = $request->ntd_dienGiai;

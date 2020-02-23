@@ -11,7 +11,10 @@
                 <i class="zmdi zmdi-close"></i>
             </div>
         </div>
-
+        <div class="header-cart-content flex-w js-pscroll">
+            <!-- Sử dụng plugin ngCart AngularJS để hiển thị Giỏ hànng -->
+            <ngcart-cart template-url="{{ asset('vendor/ngCart/template/ngCart/sidebar-cart.html') }}"></ngcart-cart>
+        </div>
         <div class="header-cart-content flex-w js-pscroll">
             <ul class="header-cart-wrapitem w-full">
                 <li class="header-cart-item flex-w flex-t m-b-12">

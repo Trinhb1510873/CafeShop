@@ -25,6 +25,8 @@ Danh sách Món Ăn
 <h1>Danh Sách Món Ăn</h1>
 <br>
 <a href="{{ route('danhsachmonan.create') }}" class="btn btn-primary" title="Thêm mới">+</a>
+<a href="{{ route('danhsachmonan.print') }}" class="btn btn-primary">In ấn</a>
+<a href="{{ route('danhsachmonan.excel') }}" class="btn btn-primary">Xuất Excel</a>
 
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">

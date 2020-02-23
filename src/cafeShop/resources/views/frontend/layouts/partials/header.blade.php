@@ -5,7 +5,7 @@
         <div class="top-bar">
             <div class="content-topbar flex-sb-m h-full container">
                 <div class="left-top-bar">
-                    Free shipping for standard order over $100
+                    
                 </div>
 
                 <div class="right-top-bar flex-w h-full">
@@ -40,7 +40,7 @@
                 <div class="menu-desktop">
                     <ul class="main-menu">
                         <li class="{{ Request::is('') ? 'active-menu' : '' }}">
-                            <a href="">Home</a>
+                            <a href="{{ route('frontend.home') }}">Home</a>
                         </li>
 
                         <li>
@@ -52,15 +52,16 @@
                         </li>
 
                         <li>
-                            <a href="blog.html">Blog</a>
+                            <li class="{{ Request::is('san-pham') ? 'active-menu' : '' }}">
+                            <a href="{{ route('frontend.product') }}">Product</a>
                         </li>
 
                         <li class="{{ Request::is('gioi-thieu') ? 'active-menu' : '' }}">
-                            <a href="">About</a>
+                            <a href="{{ route('frontend.about') }}">About</a>
                         </li>
 
                         <li class="{{ Request::is('lien-he') ? 'active-menu' : '' }}">
-                            <a href="">Contact</a>
+                           <a href="{{ route('frontend.contact') }}">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -70,7 +71,9 @@
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
                         <i class="zmdi zmdi-search"></i>
                     </div>
-
+                    <!-- Hiển thị nút summart cart -->
+                    <ngcart-summary class="js-show-cart" template-url="{{ asset('vendor/ngCart/template/ngCart/summary.html') }}"></ngcart-summary>
+                    
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
@@ -119,7 +122,7 @@
         <ul class="topbar-mobile">
             <li>
                 <div class="left-top-bar">
-                    Free shipping for standard order over $100
+                    
                 </div>
             </li>
 
