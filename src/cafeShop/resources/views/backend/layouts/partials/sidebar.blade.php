@@ -118,6 +118,51 @@
                 <li class="{{ Request::is('admin/danhsachnhanvien/create') ? 'active' : '' }}"><a href="{{ route('danhsachnhanvien.create') }}">Thêm mới nhân viên</a></li>
               </ul>
             </li>
+            <!--  Kho-->
+            <li class="treeview {{ Request::is('admin/danhsachkho*') ? 'menu-open' : '' }}">
+              <a href="{{ route('danhsachkho.index') }}"><i class="fa fa-link"></i> <span>Kho</span>
+              </a>
+              <ul class="treeview-menu" style="display: {{ Request::is('admin/danhsachkho*') ? 'block' : 'none' }};">
+                <li class="{{ Request::is('admin/danhsachkho') ? 'active' : '' }}"><a href="{{ route('danhsachkho.index') }}">Danh sách kho</a></li>
+                <li class="{{ Request::is('admin/danhsachkho/create') ? 'active' : '' }}"><a href="{{ route('danhsachkho.create') }}">Thêm mới kho</a></li>
+              </ul>
+            </li>
+            <!--  Nhóm nguyên vật liệu-->
+            <li class="treeview {{ Request::is('admin/danhsachnhomnvl*') ? 'menu-open' : '' }}">
+              <a href="{{ route('danhsachnhomnvl.index') }}"><i class="fa fa-link"></i> <span>Nhóm nguyên vật liệu</span>
+              </a>
+              <ul class="treeview-menu" style="display: {{ Request::is('admin/danhsachnhomnvl*') ? 'block' : 'none' }};">
+                <li class="{{ Request::is('admin/danhsachnhomnvl') ? 'active' : '' }}"><a href="{{ route('danhsachnhomnvl.index') }}">Danh sách nhóm nguyên vật liệu</a></li>
+                <li class="{{ Request::is('admin/danhsachnhomnvl/create') ? 'active' : '' }}"><a href="{{ route('danhsachnhomnvl.create') }}">Thêm mới nhóm nguyên vật liệu</a></li>
+              </ul>
+            </li>
+            <!--   nguyên vật liệu-->
+            <li class="treeview {{ Request::is('admin/danhsachnvl*') ? 'menu-open' : '' }}">
+              <a href="{{ route('danhsachnvl.index') }}"><i class="fa fa-link"></i> <span>Nguyên vật liệu</span>
+              </a>
+              <ul class="treeview-menu" style="display: {{ Request::is('admin/danhsachnvl*') ? 'block' : 'none' }};">
+                <li class="{{ Request::is('admin/danhsachnvl') ? 'active' : '' }}"><a href="{{ route('danhsachnvl.index') }}">Danh sách nguyên vật liệu</a></li>
+                <li class="{{ Request::is('admin/danhsachnvl/create') ? 'active' : '' }}"><a href="{{ route('danhsachnvl.create') }}">Thêm mới nguyên vật liệu</a></li>
+              </ul>
+            </li>
+            <!-- Loại chương trình khuyến mãi-->
+            <li class="treeview {{ Request::is('admin/danhsachloaictkm*') ? 'menu-open' : '' }}">
+              <a href="{{ route('danhsachloaictkm.index') }}"><i class="fa fa-link"></i> <span>Loại chương trình khuyến mãi</span>
+              </a>
+              <ul class="treeview-menu" style="display: {{ Request::is('admin/danhsachloaictkm*') ? 'block' : 'none' }};">
+                <li class="{{ Request::is('admin/danhsachloaictkm') ? 'active' : '' }}"><a href="{{ route('danhsachloaictkm.index') }}">Danh sách loại chương trình khuyến mãi</a></li>
+                <li class="{{ Request::is('admin/danhsachloaictkm/create') ? 'active' : '' }}"><a href="{{ route('danhsachloaictkm.create') }}">Thêm mới loại chương trình khuyến mãi</a></li>
+              </ul>
+            </li>
+            <!-- chương trình khuyến mãi-->
+            <li class="treeview {{ Request::is('admin/danhsachctkm*') ? 'menu-open' : '' }}">
+              <a href="{{ route('danhsachctkm.index') }}"><i class="fa fa-link"></i> <span>Chương trình khuyến mãi</span>
+              </a>
+              <ul class="treeview-menu" style="display: {{ Request::is('admin/danhsachctkm*') ? 'block' : 'none' }};">
+                <li class="{{ Request::is('admin/danhsachctkm') ? 'active' : '' }}"><a href="{{ route('danhsachctkm.index') }}">Danh sách chương trình khuyến mãi</a></li>
+                <li class="{{ Request::is('admin/danhsachctkm/create') ? 'active' : '' }}"><a href="{{ route('danhsachctkm.create') }}">Thêm mới chương trình khuyến mãi</a></li>
+              </ul>
+            </li>
         </ul>
     </div>
 </nav>

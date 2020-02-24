@@ -33,11 +33,11 @@ Route::resource('/admin/danhsachbophan', 'Backend\BoPhanController');
 Route::resource('/admin/danhsachcuahang', 'Backend\CuaHangController');
 Route::resource('/admin/danhsachchinhanh', 'Backend\ChiNhanhController');
 Route::resource('/admin/danhsachnhanvien', 'Backend\NhanVienController');
-//Route::resource('/admin/danhsachkho', 'Backend\KhoController');
-//Route::resource('/admin/danhsachnhomnvl', 'Backend\NhomNVLController');
-//Route::resource('/admin/danhsachnvl', 'Backend\NguyenVatLieuController');
-//Route::resource('/admin/danhsachloaictkm', 'Backend\LoaiCTKMController');
-//Route::resource('/admin/danhsachctkm', 'Backend\ChuongTrinhKhuyenMaiController');
+Route::resource('/admin/danhsachkho', 'Backend\KhoController');
+Route::resource('/admin/danhsachnhomnvl', 'Backend\NhomNVLController');
+Route::resource('/admin/danhsachnvl', 'Backend\NguyenVatLieuController');
+Route::resource('/admin/danhsachloaictkm', 'Backend\LoaiCTKMController');
+Route::resource('/admin/danhsachctkm', 'Backend\ChuongTrinhKhuyenMaiController');
 
 // frontend
 Route::get('/', 'Frontend\FrontendController@index')->name('frontend.home');
