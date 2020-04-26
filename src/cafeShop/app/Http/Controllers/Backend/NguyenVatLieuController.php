@@ -17,6 +17,11 @@ use function view;
 
 class NguyenVatLieuController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +29,9 @@ class NguyenVatLieuController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_nvl = NguyenVatLieu::all();
         return view('backend.nvl.index')
                 ->with('danhsachnvl',$ds_nvl);
@@ -36,6 +44,9 @@ class NguyenVatLieuController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $ds_nnvl = NhomNVL::all();
         $ds_kho = Kho::all();
         $ds_dvt = DonViTinh::all();
@@ -53,6 +64,9 @@ class NguyenVatLieuController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'nvl_ten' => 'required|min:3|max:100',
             'nvl_tinhChat' => 'required|min:3|max:100',
@@ -94,6 +108,9 @@ class NguyenVatLieuController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $ds_nnvl = NhomNVL::all();
         $ds_kho = Kho::all();
         $ds_dvt = DonViTinh::all();
@@ -114,6 +131,9 @@ class NguyenVatLieuController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'nvl_ten' => 'required|min:3|max:100',
             'nvl_tinhChat' => 'required|min:3|max:100',
@@ -144,6 +164,9 @@ class NguyenVatLieuController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $nvl = NguyenVatLieu::where("nvl_id",  $id)->first();
         $nvl->delete();
         Session::flash('alert-info', 'Xóa nguyên vật liệu thành công ^^~!!!');

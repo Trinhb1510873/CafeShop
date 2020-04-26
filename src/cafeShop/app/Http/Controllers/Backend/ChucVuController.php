@@ -14,6 +14,11 @@ use function view;
 
 class ChucVuController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +26,9 @@ class ChucVuController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_cv = ChucVu::all();
         return view('backend.chucvu.index')
                 ->with('danhsachchucvu',$ds_cv);
@@ -31,9 +39,11 @@ class ChucVuController extends Controller
      *
      * @return Response
      */
-    public function create()
-    {
-       return view('backend.chucvu.create');
+    public function create() {
+        if (!auth()->user()->can('danhmuc_them')) {
+            return view('error.403');
+        }
+        return view('backend.chucvu.create');
     }
 
     /**
@@ -44,6 +54,9 @@ class ChucVuController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('danhmuc_them')) {
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'cv_ten' => 'required|min:3|max:50',
         ]);
@@ -78,6 +91,9 @@ class ChucVuController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('danhmuc_sua')) {
+            return view('error.403');
+        }
         $cv = ChucVu::where("cv_id",  $id)->first();
         return view('backend.chucvu.edit')
             ->with('cv', $cv);
@@ -92,6 +108,9 @@ class ChucVuController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('danhmuc_sua')) {
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'cv_ten' => 'required|min:3|max:50',
         ]);
@@ -115,6 +134,9 @@ class ChucVuController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('danhmuc_xoa')) {
+            return view('error.403');
+        }
         $cv = ChucVu::where("cv_id",  $id)->first();
         $cv->delete();
         Session::flash('alert-info', 'Xóa chức vụ thành công ^^~!!!');

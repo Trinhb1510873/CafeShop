@@ -9,6 +9,11 @@ Thêm mới nhóm thực đơn
 <link href="{{ asset('vendor/bootstrap-fileinput/css/fileinput.css') }}" media="all" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
 <link href="{{ asset('vendor/bootstrap-fileinput/themes/explorer-fas/theme.css') }}" media="all" rel="stylesheet" type="text/css"/>
+<style>
+    .form-control{
+        width:500px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -29,15 +34,15 @@ Thêm mới nhóm thực đơn
     {{ csrf_field() }}
     <div class="form-group">
         <label for="ntd_ten">Tên nhóm thực đơn</label>
-        <input placeholder="Mời nhập tên nhóm thực đơn" style="width:300px;"type="text" class="form-control" id="ntd_ten" name="ntd_ten" value="{{ old('ntd_ten') }}">
+        <input placeholder="Mời nhập tên nhóm thực đơn" type="text" class="form-control" id="ntd_ten" name="ntd_ten" value="{{ old('ntd_ten') }}">
     </div>
     <div class="form-group">
         <label for="ntd_dienGiai">Diễn giải</label>
-        <input placeholder="Mời nhập diễn giải" style="width:300px;"type="text" class="form-control" id="ntd_dienGiai" name="ntd_dienGiai" value="{{ old('ntd_dienGiai') }}">
+        <textarea rows="5" cols="20" placeholder="Mời nhập diễn giải" type="text" class="form-control" id="ntd_dienGiai" name="ntd_dienGiai" value="{{ old('ntd_dienGiai') }}"></textarea>
     </div>
     <div class="form-group">
         <label for="id_bep">Bếp</label>
-        <select style="width:300px;" name="id_bep" class="form-control">
+        <select  name="id_bep" class="form-control">
             @foreach($danhsachbep as $bep)
                 @if(old('id_bep') == $bep->b_id)
                 <option value="{{ $bep->b_id }}" selected>{{ $bep->b_ten }}</option>
@@ -49,7 +54,7 @@ Thêm mới nhóm thực đơn
     </div>
     <div class="form-group">
         <label for="id_loaiMonAn">Loại món ăn</label>
-        <select style="width:300px;" name="id_loaiMonAn" class="form-control">
+        <select  name="id_loaiMonAn" class="form-control">
             @foreach($danhsachloai as $loai)
                 @if(old('id_loaiMonAn') == $loai->lma_id)
                 <option value="{{ $loai->lma_id }}" selected>{{ $loai->lma_ten }}</option>

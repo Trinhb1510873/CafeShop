@@ -13,7 +13,7 @@ class DonViTinhTableSeeder extends Seeder
     {
        
         $list = [];
-        $dvt = [" Kilogram (kg)", "gram (g)", "thùng", "ly", "chai", "tô", "dĩa","phần"];
+        $dvt = [" Kilogram (kg)", "chai", "dĩa", "gram (g)", "hộp", "thùng", "Tô","phần","Lon","Ly"];
         sort($dvt);
         for ($i=1; $i <= count($dvt); $i++) {
             array_push($list, [

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <style>
         .container-fluid {
-            margin-top: 60px;
+            margin-top: 70px;
         }
     </style>    
 

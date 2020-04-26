@@ -27,6 +27,7 @@ Danh sách Món Ăn
 <a href="{{ route('danhsachmonan.create') }}" class="btn btn-primary" title="Thêm mới">+</a>
 <a href="{{ route('danhsachmonan.print') }}" class="btn btn-primary">In ấn</a>
 <a href="{{ route('danhsachmonan.excel') }}" class="btn btn-primary">Xuất Excel</a>
+<a href="{{ route('danhsachmonan.pdf') }}" class="btn btn-primary">Xuất PDF</a>
 
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
@@ -47,7 +48,7 @@ Danh sách Món Ăn
                 <td width='5%'>{{ $stt }}</td>
                 <td width='10%'>{{ $ma->ma_ten}}</td>
                 <td>{{ number_format($ma->ma_giaBan)}}đ</td>
-                <td width='20%'><img width='100px' src="{{ asset('storage/photos/' .  $ma->ma_hinh ) }}" class="img-list" /></td>
+                <td width='20%'><img width='100px' height="80px" src="{{ asset('storage/photos/' .  $ma->ma_hinh ) }}" class="img-list" /></td>
                 <td width='10%'>{{ $ma->donViTinh->dvt_ten}}</td>
                 <td width='10%'>{{ $ma->nhomThucDon->ntd_ten}}</td>
                 <td>

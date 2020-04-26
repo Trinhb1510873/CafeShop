@@ -14,6 +14,11 @@ use function view;
 
 class BoPhanController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +26,9 @@ class BoPhanController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_bp = BoPhan::all();
         return view('backend.bophan.index')
                 ->with('danhsachbophan',$ds_bp);
@@ -33,6 +41,9 @@ class BoPhanController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         return view('backend.bophan.create');
     }
 
@@ -44,6 +55,9 @@ class BoPhanController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'bp_ten' => 'required|min:3|max:50',
         ]);
@@ -78,6 +92,9 @@ class BoPhanController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $bp = BoPhan::where("bp_id",  $id)->first();
         return view('backend.bophan.edit')
             ->with('bp', $bp);
@@ -92,6 +109,9 @@ class BoPhanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'bp_ten' => 'required|min:3|max:50',
         ]);
@@ -115,6 +135,9 @@ class BoPhanController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $bp = BoPhan::where("bp_id",  $id)->first();
         $bp->delete();
         Session::flash('alert-info', 'Xóa bộ phận thành công ^^~!!!');

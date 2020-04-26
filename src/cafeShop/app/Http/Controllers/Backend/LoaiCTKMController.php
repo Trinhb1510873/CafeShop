@@ -14,6 +14,10 @@ use function view;
 
 class LoaiCTKMController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +25,9 @@ class LoaiCTKMController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_lctkm = LoaiCTKM::all();
         return view('backend.loaictkm.index')
                 ->with('danhsachloaictkm',$ds_lctkm);
@@ -33,6 +40,9 @@ class LoaiCTKMController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         return view('backend.loaictkm.create');
     }
 
@@ -44,6 +54,9 @@ class LoaiCTKMController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'lctkm_ten' => 'required|min:3|max:100',
         ]);
@@ -78,6 +91,9 @@ class LoaiCTKMController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $lctkm = LoaiCTKM::where("lctkm_id",  $id)->first();
         return view('backend.loaictkm.edit')
             ->with('lctkm', $lctkm);
@@ -92,6 +108,9 @@ class LoaiCTKMController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'lctkm_ten' => 'required|min:3|max:100',
         ]);
@@ -115,6 +134,9 @@ class LoaiCTKMController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $lctkm = LoaiCTKM::where("lctkm_id",  $id)->first();
         $lctkm->delete();
         Session::flash('alert-info', 'Xóa loại chương trình khuyến mãi thành công ^^~!!!');

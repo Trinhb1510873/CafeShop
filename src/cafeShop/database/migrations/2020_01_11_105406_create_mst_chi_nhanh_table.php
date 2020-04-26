@@ -20,8 +20,8 @@ class CreateMstChiNhanhTable extends Migration
             $table->string('cn_diachi', 100)->comment('địa cnỉ chi nhánh');
             $table->string('cn_soDienThoai', 100)->comment('số điện thoại chi nhánh');
             $table->unsignedBigInteger('id_cuaHang')->comment('Chi nhánh thuộc cửa hàng nào');
-            $table->double('longitude');
-            $table->double('latitude');
+            $table->double('longitude')->nullable();
+            $table->double('latitude')->nullable();
             
             $table->timestamps();
             $table->softDeletes();

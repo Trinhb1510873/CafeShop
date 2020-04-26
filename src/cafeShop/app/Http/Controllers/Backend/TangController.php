@@ -14,6 +14,11 @@ use Validator;
 
 class TangController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +26,9 @@ class TangController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_tang = Tang::all();
         return view('backend.tang.index')
                 ->with('danhsachtang',$ds_tang);
@@ -33,6 +41,9 @@ class TangController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
        return view('backend.tang.create');
     }
 
@@ -44,6 +55,9 @@ class TangController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             't_ten' => 'required|min:3|max:50',
         ]);
@@ -78,6 +92,9 @@ class TangController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $t = Tang::where("t_id",  $id)->first();
         return view('backend.tang.edit')
             ->with('t', $t);
@@ -92,6 +109,9 @@ class TangController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             't_ten' => 'required|min:3|max:50',
         ]);
@@ -115,6 +135,9 @@ class TangController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $t = Tang::where("t_id",  $id)->first();
         $t->delete();
         Session::flash('alert-info', 'Xóa tầng thành công ^^~!!!');

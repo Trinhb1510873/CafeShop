@@ -9,6 +9,11 @@ Thêm mới món ăn
 <link href="{{ asset('vendor/bootstrap-fileinput/css/fileinput.css') }}" media="all" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
 <link href="{{ asset('vendor/bootstrap-fileinput/themes/explorer-fas/theme.css') }}" media="all" rel="stylesheet" type="text/css"/>
+<style>
+    .form-control{
+        width:500px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -21,8 +26,12 @@ Thêm mới món ăn
         </ul>
     </div>
 @endif
-
+<h1>Danh Sách Món Ăn</h1>
+<br>
 <form method="post" action="{{ route('danhsachmonan.store') }}" enctype="multipart/form-data">
+    <button type="button" class="btn btn-success" onclick=history.back() >Quay lại</button>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <br><br>
     {{ csrf_field() }}
     <div class="form-group">
         <label for="">Nhóm thực đơn</label>
@@ -54,7 +63,7 @@ Thêm mới món ăn
     </div>
     <div class="form-group">
         <label for="ma_dienGiai">Diễn giải</label>
-        <input type="text" class="form-control" id="ma_dienGiai" name="ma_dienGiai" value="{{ old('ma_dienGiai') }}">
+        <textarea rows="5" cols="20" class="form-control" id="ma_dienGiai" name="ma_dienGiai" value="{{ old('ma_dienGiai') }}"></textarea>
     </div>
 
     <div class="form-group">
@@ -89,17 +98,17 @@ Thêm mới món ăn
     <div class="form-group">
          <label>Hình đại diện</label>
         <div class="file-loading">
-            <input id="ma_hinh" type="file" name="ma_hinh">
+            <input id="ma_hinh" type="file" name="ma_hinh" value="{{ old('ma_hinh') }}">
         </div>
     </div>
     <div class="form-group">
         <label>Hình ảnh liên quan sản phẩm</label>
         <div class="file-loading"> 
-            <input id="ma_hinhanhlienquan" type="file" name="ma_hinhanhlienquan[]" multiple>
+            <input id="ma_hinhanhlienquan" type="file" name="ma_hinhanhlienquan[]" multiple value="{{ old('ma_hinhanhlienquan') }}">
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Lưu</button>
     <button type="button" class="btn btn-success" onclick=history.back() >Quay lại</button>
+    <button type="submit" class="btn btn-primary">Lưu</button>
 </form>
 @endsection
 

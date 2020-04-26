@@ -14,6 +14,11 @@ use function view;
 
 class CuaHangController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +26,9 @@ class CuaHangController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_ch = CuaHang::all();
         return view('backend.cuahang.index')
                 ->with('danhsachcuahang',$ds_ch);
@@ -33,6 +41,9 @@ class CuaHangController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
          return view('backend.cuahang.create');
     }
 
@@ -44,6 +55,9 @@ class CuaHangController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'ch_ten' => 'required|min:3|max:100',
             'ch_tenNguoiDaiDien' =>'required|min:3|max:100',
@@ -86,6 +100,9 @@ class CuaHangController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $ch = CuaHang::where("ch_id",  $id)->first();
         return view('backend.cuahang.edit')
             ->with('ch', $ch);
@@ -100,6 +117,9 @@ class CuaHangController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'ch_ten' => 'required|min:3|max:100',
             'ch_tenNguoiDaiDien' =>'required|min:3|max:100',
@@ -131,6 +151,9 @@ class CuaHangController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $ch = CuaHang::where("ch_id",  $id)->first();
         $ch->delete();
         Session::flash('alert-info', 'Xóa cửa hàng thành công ^^~!!!');

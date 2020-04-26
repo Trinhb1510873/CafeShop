@@ -17,7 +17,7 @@ class CreateMstBanTable extends Migration
             $table->engine = 'InnoDB';
             $table->bigIncrements('ban_id')->comment('Mã bàn');
             $table->string('ban_ten', 100)->comment('Tên bàn');
-            $table->bigInteger('ban_trangThai')->comment('1:có khách, 2:trống');
+            $table->bigInteger('ban_trangThai')->comment('1:trống, 2:có khách');
             $table->bigInteger('ban_soLuong')->comment('số lượng khách');
             $table->unsignedBigInteger('id_tang')->comment('bàn của tầng nào');
             

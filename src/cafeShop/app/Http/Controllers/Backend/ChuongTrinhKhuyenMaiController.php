@@ -15,6 +15,11 @@ use function view;
 
 class ChuongTrinhKhuyenMaiController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +27,9 @@ class ChuongTrinhKhuyenMaiController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('danhmuc_xem')) {
+            return view('error.403');
+        }
         $ds_ctkm = ChuongTrinhKhuyenMai::all();
         return view('backend.ctkm.index')
                 ->with('danhsachctkm',$ds_ctkm);
@@ -34,6 +42,9 @@ class ChuongTrinhKhuyenMaiController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('danhmuc_them')) {
+            return view('error.403');
+        }
         $ds_lctkm = LoaiCTKM::all();
         return view('backend.ctkm.create')
             ->with('danhsachloaictkm', $ds_lctkm);
@@ -47,6 +58,9 @@ class ChuongTrinhKhuyenMaiController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('danhmuc_them')) {
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'ctkm_ten' => 'required|min:3|max:100',
             'ctkm_ma' => 'required|min:3|max:100',
@@ -93,6 +107,9 @@ class ChuongTrinhKhuyenMaiController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('danhmuc_sua')) {
+            return view('error.403');
+        }
         
         $ds_lctkm = LoaiCTKM::all();
         $ctkm = ChuongTrinhKhuyenMai::where("ctkm_id",  $id)->first();
@@ -110,6 +127,9 @@ class ChuongTrinhKhuyenMaiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('danhmuc_sua')) {
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'ctkm_ten' => 'required|min:3|max:100',
             'ctkm_ma' => 'required|min:3|max:100',
@@ -146,6 +166,9 @@ class ChuongTrinhKhuyenMaiController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('danhmuc_xoa')) {
+            return view('error.403');
+        }
         $ctkm = ChuongTrinhKhuyenMai::where("ctkm_id",  $id)->first();
         $ctkm->delete();
         Session::flash('alert-info', 'Xóa chương trình khuyến mãi thành công ^^~!!!');

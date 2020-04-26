@@ -10,6 +10,11 @@ use Validator;
 
 class LoaiMonAnController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +22,9 @@ class LoaiMonAnController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_loai = LoaiMonAn::all();
         return view('backend.loaimonan.index')
                 ->with('danhsachloaimonan',$ds_loai);
@@ -29,6 +37,9 @@ class LoaiMonAnController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         return view('backend.loaimonan.create');
     }
 
@@ -40,6 +51,9 @@ class LoaiMonAnController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'lma_ten' => 'required|min:3|max:50',
         ]);
@@ -74,6 +88,9 @@ class LoaiMonAnController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $lma = LoaiMonAn::where("lma_id",  $id)->first();
         return view('backend.loaimonan.edit')
             ->with('lma', $lma);
@@ -88,6 +105,9 @@ class LoaiMonAnController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'lma_ten' => 'required|min:3|max:50',
         ]);
@@ -111,6 +131,9 @@ class LoaiMonAnController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $lma = LoaiMonAn::where("lma_id",  $id)->first();
         $lma->delete();
         Session::flash('alert-info', 'Xóa sản phẩm thành công ^^~!!!');

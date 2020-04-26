@@ -5,7 +5,11 @@ Hiệu chỉnh nhóm thực đơn
 @endsection
 
 @section('custom-css')
-
+<style>
+    .form-control{
+        width:500px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -24,15 +28,15 @@ Hiệu chỉnh nhóm thực đơn
     {{ csrf_field() }}
     <div class="form-group">
         <label for="ntd_ten">Tên nhóm thực đơn</label>
-        <input style="width:300px;"type="text" class="form-control" id="ntd_ten" name="ntd_ten" value="{{ old('ntd_ten', $ntd->ntd_ten) }}">
+        <input type="text" class="form-control" id="ntd_ten" name="ntd_ten" value="{{ old('ntd_ten', $ntd->ntd_ten) }}">
     </div> 
     <div class="form-group">
         <label for="ntd_dienGiai">Diễn giải</label>
-        <input placeholder="Mời nhập diễn giải" style="width:300px;"type="text" class="form-control" id="ntd_dienGiai" name="ntd_dienGiai" value="{{ old('ntd_dienGiai', $ntd->ntd_dienGiai) }}">
+        <textarea rows="5" cols="20" placeholder="Mời nhập diễn giải" type="text" class="form-control" id="ntd_dienGiai" name="ntd_dienGiai" value="{{ old('ntd_dienGiai', $ntd->ntd_dienGiai) }}">{{ old('ntd_dienGiai', $ntd->ntd_dienGiai) }}</textarea>
     </div>
     <div class="form-group">
         <label for="id_bep">Bếp</label>
-        <select style="width:300px;" name="id_bep" class="form-control">
+        <select  name="id_bep" class="form-control">
             @foreach($danhsachbep as $bep)
                 @if($bep->b_id == $ntd->id_bep)
                 <option value="{{ $bep->b_id }}" selected>{{ $bep->b_ten }}</option>
@@ -44,7 +48,7 @@ Hiệu chỉnh nhóm thực đơn
     </div>
     <div class="form-group">
         <label for="id_loaiMonAn">Loại món ăn</label>
-        <select style="width:300px;" name="id_loaiMonAn" class="form-control">
+        <select  name="id_loaiMonAn" class="form-control">
             @foreach($danhsachloai as $loai)
                 @if($loai->lma_id == $ntd->id_loaiMonAn )
                 <option value="{{ $loai->lma_id }}" selected>{{ $loai->lma_ten }}</option>

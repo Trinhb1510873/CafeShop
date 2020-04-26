@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -18,17 +18,19 @@ class PermissionSeeder extends Seeder
         $role_user = Role::create(['name' => 'user']);
 
         //tao quyen
-        $permission_sp_xem = Permission::create(['name' => 'sp_xem']);
-        $permission_sp_them = Permission::create(['name' => 'sp_them']);
-        $permission_sp_sua = Permission::create(['name' => 'sp_sua']);
-        $permission_sp_xoa= Permission::create(['name' => 'sp_xoa']);
+        $permission_danhmuc_xem = Permission::create(['name' => 'danhmuc_xem']);
+        $permission_danhmuc_them = Permission::create(['name' => 'danhmuc_them']);
+        $permission_danhmuc_sua = Permission::create(['name' => 'danhmuc_sua']);
+        $permission_danhmuc_xoa = Permission::create(['name' => 'danhmuc_xoa']);
+        $permission_order = Permission::create(['name' => 'order']);
+        $permission_danhmuc_print = Permission::create(['name' => 'print']);
+        $permission_danhmuc_excel = Permission::create(['name' => 'excel']);
+        $permission_danhmuc_pdf = Permission::create(['name' => 'pdf']);
 
         //cap quyen cho vai tro
-        $role_quan_tri->givePermissionTo($permission_sp_xem);
-        $role_quan_tri->givePermissionTo($permission_sp_them);
-        
-        //quyen duoc cap cho vai tro
-            // $permission->assignRole($role);
+        $role_quan_tri->givePermissionTo(array($permission_danhmuc_xem, $permission_danhmuc_them, $permission_danhmuc_sua, $permission_danhmuc_xoa));
+        $role_quan_tri->givePermissionTo(array($permission_danhmuc_print, $permission_danhmuc_excel, $permission_danhmuc_pdf));
+        $role_user->givePermissionTo($permission_order);
 
     }
 }

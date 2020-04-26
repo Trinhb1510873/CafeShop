@@ -17,6 +17,11 @@ use function view;
 
 class NhanVienController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +29,9 @@ class NhanVienController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_nv = NhanVien::all();
         return view('backend.nhanvien.index')
                 ->with('danhsachnhanvien',$ds_nv);
@@ -36,6 +44,9 @@ class NhanVienController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $ds_cv = ChucVu::all();
         $ds_bp = BoPhan::all();
         $ds_cn = ChiNhanh::all();
@@ -53,6 +64,9 @@ class NhanVienController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'nv_hoTen' => 'required|min:3|max:100',
             'nv_ngaySinh' =>'required|date',
@@ -104,6 +118,9 @@ class NhanVienController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $ds_cv = ChucVu::all();
         $ds_bp = BoPhan::all();
         $ds_cn = ChiNhanh::all();   
@@ -124,6 +141,9 @@ class NhanVienController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'nv_hoTen' => 'required|min:3|max:100',
             'nv_ngaySinh' =>'required|date',
@@ -164,6 +184,9 @@ class NhanVienController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $nv = NhanVien::where("nv_id",  $id)->first();
         $nv->delete();
         Session::flash('alert-info', 'Xóa Nhân viên thành công ^^~!!!');

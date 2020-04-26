@@ -15,6 +15,11 @@ use function view;
 
 class ChiNhanhController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +27,9 @@ class ChiNhanhController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_cn = ChiNhanh::all();
         return view('backend.chinhanh.index')
                 ->with('danhsachchinhanh',$ds_cn);
@@ -34,6 +42,9 @@ class ChiNhanhController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $ds_ch = CuaHang::all();
         return view('backend.chinhanh.create')
             ->with('danhsachcuahang',$ds_ch);
@@ -47,6 +58,9 @@ class ChiNhanhController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'cn_ten' => 'required|min:3|max:100',
             'cn_diachi' =>'required|min:3|max:100',
@@ -90,6 +104,9 @@ class ChiNhanhController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $ds_ch = CuaHang::all();
         $cn = ChiNhanh::where("cn_id",  $id)->first();
         return view('backend.chinhanh.edit')
@@ -106,6 +123,9 @@ class ChiNhanhController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'cn_ten' => 'required|min:3|max:100',
             'cn_diachi' =>'required|min:3|max:100',
@@ -138,6 +158,9 @@ class ChiNhanhController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $cn = ChiNhanh::where("cn_id",  $id)->first();
         $cn->delete();
         Session::flash('alert-info', 'Xóa chi nhánh thành công ^^~!!!');

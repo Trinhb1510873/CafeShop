@@ -14,6 +14,9 @@ use Validator;
 
 class BanController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +24,9 @@ class BanController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_ban = Ban::all();
         return view('backend.ban.index')
             ->with('danhsachban', $ds_ban);
@@ -33,6 +39,9 @@ class BanController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $ds_tang = Tang::all();
         return view('backend.ban.create')
             ->with('danhsachtang', $ds_tang);
@@ -46,6 +55,9 @@ class BanController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'ban_ten' => 'required|min:3|max:100',
             'ban_soLuong' => 'required|numeric',
@@ -83,7 +95,10 @@ class BanController extends Controller
      * @return Response
      */
     public function edit($id)
-    {   
+    {  
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $b = Ban::where("ban_id", $id)->first();
         $ds_tang = Tang::all();
         return view('backend.ban.edit')
@@ -100,6 +115,9 @@ class BanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'ban_ten' => 'required|min:3|max:100',
             'ban_soLuong' => 'required|numeric',
@@ -127,6 +145,9 @@ class BanController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $b = Ban::where("ban_id", $id)->first();
         $$b->delete();
         Session::flash('alert-info', 'Xóa bàn thành công ^^~!!!');

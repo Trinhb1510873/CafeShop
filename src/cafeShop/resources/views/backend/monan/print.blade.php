@@ -28,7 +28,7 @@ Biểu mẫu Phiếu in danh sách món ăn
         <?php 
         $tongSoTrang = ceil(count($danhsachmonan)/5);
             ?>
-        <table border="1" align="center" cellpadding="5">
+        <table border="1" align="center" cellpadding="5" style="width: 500px; page-break-after:always" >
             <caption>Danh sách món ăn</caption>
             <tr>
                 <th colspan="7" align="center">Trang 1 / {{ $tongSoTrang }}</th>
@@ -49,7 +49,7 @@ Biểu mẫu Phiếu in danh sách món ăn
                     <img width="100px" class="hinhSanPham" src="{{ asset('storage/photos/' . $sp->ma_hinh) }}" />
                 </td>
                 <td align="left">{{ $sp->ma_ten }}</td>
-                <td align="right">{{ $sp->ma_giaGoc }}</td>
+                <td align="right">{{ $sp->ma_giaVon }}</td>
                 <td align="right">{{ $sp->ma_giaBan }}</td>
                 @foreach ($danhsachntd as $ntd)
                     @if ($sp->id_nhom_thuc_don == $ntd->ntd_id)
@@ -65,8 +65,8 @@ Biểu mẫu Phiếu in danh sách món ăn
             </tr>
             @if (($loop->index + 1) % 5 == 0)
         </table>
-        <div class="page-break"></div>
-        <table border="1" align="center" cellpadding="5">
+        
+        <table class="sheet padding-10mm" border="1" align="center" cellpadding="5" style="width: 500px; page-break-after:always">
             <tr>
                 <th colspan="7" align="center">Trang {{ 1 + floor(($loop->index + 1) / 5) }} / {{ $tongSoTrang }}</th>
             </tr>

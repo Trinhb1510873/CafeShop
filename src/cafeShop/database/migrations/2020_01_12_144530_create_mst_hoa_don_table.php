@@ -24,8 +24,8 @@ class CreateMstHoaDonTable extends Migration
             $table->unsignedBigInteger('id_nhan_vien')->comment('người lập hóa đơn');
             $table->unsignedBigInteger('id_ban')->comment('hóa đơn của bàn nào');
             $table->unsignedBigInteger('id_chi_nhanh')->comment('thuộc chi nhánh nào');
-            $table->unsignedBigInteger('id_khach_hang')->comment('mã khách hàng');
-            $table->unsignedBigInteger('id_ct_khuyen_mai')->comment('chương trình khuyến mãi');
+            $table->unsignedBigInteger('id_khach_hang')->comment('mã khách hàng')->nullable();
+            $table->unsignedBigInteger('id_ct_khuyen_mai')->comment('chương trình khuyến mãi')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

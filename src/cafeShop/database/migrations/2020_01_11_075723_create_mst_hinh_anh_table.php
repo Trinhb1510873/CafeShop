@@ -21,7 +21,6 @@ class CreateMstHinhAnhTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['ha_ten']);
             $table->foreign('id_mon_an') 
                 ->references('ma_id')->on('mst_mon_an')
                 ->onDelete('CASCADE')

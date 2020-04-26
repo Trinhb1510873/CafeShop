@@ -14,6 +14,11 @@ use function view;
 
 class KhoController extends Controller
 {
+    
+     public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +26,9 @@ class KhoController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_k = Kho::all();
         return view('backend.kho.index')
                 ->with('danhsachkho',$ds_k);
@@ -33,6 +41,9 @@ class KhoController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         return view('backend.kho.create');
     }
 
@@ -44,6 +55,9 @@ class KhoController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'k_ten' => 'required|min:3|max:50',
             'k_diaChi' =>'required|min:3|max:200',
@@ -80,6 +94,9 @@ class KhoController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $kho = Kho::where("k_id",  $id)->first();
         return view('backend.kho.edit')
             ->with('kho', $kho);
@@ -94,6 +111,9 @@ class KhoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'k_ten' => 'required|min:3|max:50',
             'k_diaChi' =>'required|min:3|max:200',
@@ -117,11 +137,15 @@ class KhoController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id) 
     {
-        $kho = Kho::where("k_id",  $id)->first();
+        if (!auth()->user()->can('danhmuc_xoa')) {
+            return view('error.403');
+        }
+        $kho = Kho::where("k_id", $id)->first();
         $kho->delete();
         Session::flash('alert-info', 'Xóa kho thành công ^^~!!!');
         return redirect()->route('danhsachkho.index');
     }
+
 }

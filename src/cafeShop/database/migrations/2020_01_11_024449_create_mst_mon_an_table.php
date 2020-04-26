@@ -17,7 +17,7 @@ class CreateMstMonAnTable extends Migration
             $table->engine = 'InnoDB';
             $table->bigIncrements('ma_id')->comment('Mã mon_an');
             $table->string('ma_ten', 100)->comment('Tên mon_an');
-            $table->string('ma_dienGiai', 1000)->comment('Tên mon_an');
+            $table->string('ma_dienGiai', 1000)->comment('Dien_giai mon_an')->nullable();
             $table->decimal('ma_giaBan')->comment('Giá bán');
             $table->decimal('ma_giaVon')->comment('Giá vốn');
             $table->bigInteger('ma_mon_dac_trung')->comment('1:món đặc trưng, 2:không phải món đặc trưng');

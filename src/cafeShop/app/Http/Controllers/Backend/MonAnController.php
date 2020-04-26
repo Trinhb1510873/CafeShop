@@ -14,11 +14,16 @@ use Illuminate\Support\Facades\Storage;
 use function redirect;
 use function view;
 use Validator;
-use App\Exports\SanPhamExport;
+use App\Exports\MonAnExport;
 use Maatwebsite\Excel\Facades\Excel as Excel;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class MonAnController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,6 +31,9 @@ class MonAnController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_monan = MonAn::all();
         return view('backend.monan.index')
             ->with('danhsachmonan', $ds_monan);
@@ -38,6 +46,9 @@ class MonAnController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $ds_ntd = NhomThucDon::all();
         $ds_dvt = DonViTinh::all();
         return view('backend.monan.create')
@@ -54,6 +65,9 @@ class MonAnController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validation = $request->validate([
             'ma_hinh' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
             // Cú pháp dùng upload nhiều file
@@ -111,8 +125,10 @@ class MonAnController extends Controller
      */
     public function show($id)
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ma = MonAn::where("ma_id",  $id)->first();
-//        print_r($ma);die;
         return view('backend.monan.show')
                 ->with('ma', $ma);
     }
@@ -125,6 +141,9 @@ class MonAnController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $ma = MonAn::where("ma_id",  $id)->first();
         $ds_ntd = NhomThucDon::all();
         $ds_dvt = DonViTinh::all();
@@ -143,6 +162,9 @@ class MonAnController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validation = $request->validate([
             'ma_hinh' => 'file|image|mimes:jpeg,png,gif,webp|max:2048',
             // Cú pháp dùng upload nhiều file
@@ -197,28 +219,7 @@ class MonAnController extends Controller
         return redirect()->route('danhsachmonan.index');
         
     }
-    public function prints()
-    {
-        $ds_monan = MonAn::all();
-        $ds_ntd = NhomThucDon::all();
-        $ds_dvt = DonViTinh::all();
-        return view('backend.monan.print')
-                ->with('danhsachmonan', $ds_monan)
-                ->with('danhsachntd', $ds_ntd)
-                ->with('danhsachdvt', $ds_dvt);
-    }
-    public function excel() 
-    {
-        /* Code dành cho việc debug
-    - Khi debug cần hiển thị view để xem trước khi Export Excel
-    */
-    // $ds_sanpham = Sanpham::all();
-    // $ds_loai    = Loai::all();
-    // return view('sanpham.excel')
-    //     ->with('danhsachsanpham', $ds_sanpham)
-    //     ->with('danhsachloai', $ds_loai);
-        return Excel::download(new SanPhamExport, 'danhsachmonan.xlsx');
-    }
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -227,23 +228,60 @@ class MonAnController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $ma = MonAn::where("ma_id",  $id)->first();
         if(empty($ma) == false)
         {
-            // DELETE các dòng liên quan trong table `HinhAnh`
             foreach($ma->hinhAnh()->get() as $hinhAnh)
             {
-                // Xóa hình cũ để tránh rác
                 Storage::delete('public/photos/' . $hinhAnh->ha_ten);
-                // Xóa record
                 $hinhAnh->delete();
             }
-            // Xóa hình cũ để tránh rác
             Storage::delete('public/photos/' . $ma->ma_hinh);
         }
         $ma->delete();
         Session::flash('alert-info', 'Xóa món ăn thành công ^^~!!!');
         return redirect()->route('danhsachmonan.index');
-
     }
+
+    public function prints() {
+        if(!auth()->user()->can('print')){
+            print_r(auth()->user()->can('danhmuc_sua'));die;
+            return view('error.403');
+        }
+        $ds_monan = MonAn::all();
+        $ds_ntd = NhomThucDon::all();
+        $ds_dvt = DonViTinh::all();
+        return view('backend.monan.print')
+                        ->with('danhsachmonan', $ds_monan)
+                        ->with('danhsachntd', $ds_ntd)
+                        ->with('danhsachdvt', $ds_dvt);
+    }
+
+    public function excel() {
+        if(!auth()->user()->can('excel')){
+            return view('error.403');
+        }
+        return Excel::download(new MonAnExport, 'danhsachmonan.xlsx');
+    }
+
+    public function pdf() {
+        if(!auth()->user()->can('pdf')){
+            return view('error.403');
+        }
+        $ds_monan = MonAn::all();
+        $ds_ntd = NhomThucDon::all();
+        $ds_dvt = DonViTinh::all();
+
+        $data = [
+            'danhsachmonan' => $ds_monan,
+            'danhsachntd' => $ds_ntd,
+            'danhsachdvt' => $ds_dvt,
+        ];
+        $pdf = PDF::loadView('backend.monan.pdf', $data);
+        return $pdf->download('DanhMucMonAn.pdf');
+    }
+
 }

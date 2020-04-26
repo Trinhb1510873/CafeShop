@@ -12,7 +12,7 @@ class LoaiMonAnTableSeeder extends Seeder
     public function run()
     {
         $list = [];
-        $types = ["Thức ăn nhanh", "Món ăn", "Nước uống"];
+        $types = ["Món ăn", "Nước uống"];
         sort($types);
         for ($i=1; $i <= count($types); $i++) {
             array_push($list, [

@@ -10,6 +10,11 @@ use Validator;
 
 class DonViTinhController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +22,9 @@ class DonViTinhController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_loai = DonViTinh::all();
         return view('backend.donvitinh.index')
                 ->with('danhsachdonvitinh',$ds_loai);
@@ -29,6 +37,9 @@ class DonViTinhController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         return view('backend.donvitinh.create');
     }
 
@@ -40,6 +51,9 @@ class DonViTinhController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         
         $validator = Validator::make($request->all(), [
             'dvt_ten' => 'required|min:3|max:50',
@@ -75,6 +89,9 @@ class DonViTinhController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $dvt = donvitinh::where("dvt_id",  $id)->first();
         return view('backend.donvitinh.edit')
             ->with('dvt', $dvt);
@@ -89,6 +106,9 @@ class DonViTinhController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'dvt_ten' => 'required|min:3|max:50',
         ]);
@@ -112,6 +132,9 @@ class DonViTinhController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $dvt = DonViTinh::where("dvt_id",  $id)->first();
         $dvt->delete();
         Session::flash('alert-info', 'Xóa sản phẩm thành công ^^~!!!');

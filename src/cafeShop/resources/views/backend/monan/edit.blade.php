@@ -9,6 +9,11 @@ Hiệu chỉnh món ăn
 <link href="{{ asset('vendor/bootstrap-fileinput/css/fileinput.css') }}" media="all" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
 <link href="{{ asset('vendor/bootstrap-fileinput/themes/explorer-fas/theme.css') }}" media="all" rel="stylesheet" type="text/css"/>
+<style>
+    .form-control{
+        width:500px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -23,15 +28,19 @@ Hiệu chỉnh món ăn
 @endif
 <h1>Hiệu chỉnh món ăn</h1>
 <form method="post" action="{{ route('danhsachmonan.update', ['danhsachmonan' => $ma->ma_id]) }}" enctype="multipart/form-data">
+    <br>
+    <button type="button" class="btn btn-success" onclick=history.back() >Quay lại</button>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <br><br>
     <input type="hidden" name="_method" value="PUT" />
     {{ csrf_field() }}
     <div class="form-group">
         <label for="ma_ten">Tên món ăn</label>
-        <input style="width:300px;"type="text" class="form-control" id="ma_ten" name="ma_ten" value="{{ old('ma_ten', $ma->ma_ten) }}">
+        <input type="text" class="form-control" id="ma_ten" name="ma_ten" value="{{ old('ma_ten', $ma->ma_ten) }}">
     </div> 
     <div class="form-group">
         <label for="id_nhom_thuc_don">Nhóm thực đơn</label>
-        <select style="width:300px;" name="id_nhom_thuc_don" class="form-control">
+        <select  name="id_nhom_thuc_don" class="form-control">
             @foreach($danhsachntd as $ntd)
                 @if($ntd->ntd_id == $ma->id_nhom_thuc_don)
                 <option value="{{ $ntd->ntd_id }}" selected>{{ $ntd->ntd_ten }}</option>
@@ -43,7 +52,7 @@ Hiệu chỉnh món ăn
     </div>
     <div class="form-group">
         <label for="id_don_vi_tinh">Đơn vị tính</label>
-        <select style="width:300px;" name="id_don_vi_tinh" class="form-control">
+        <select  name="id_don_vi_tinh" class="form-control">
             @foreach($danhsachdvt as $dvt)
                 @if($dvt->dvt_id == $ma->id_don_vi_tinh )
                 <option value="{{ $dvt->dvt_id }}" selected>{{ $dvt->dvt_ten }}</option>
@@ -55,7 +64,7 @@ Hiệu chỉnh món ăn
     </div>
     <div class="form-group">
         <label for="ma_dienGiai">Diễn giải</label>
-        <input type="text" class="form-control" id="ma_dienGiai" name="ma_dienGiai" value="{{ old('ma_dienGiai', $ma->ma_dienGiai) }}">
+        <textarea rows="5" cols="20" class="form-control" id="ma_dienGiai" name="ma_dienGiai" value="{{ old('ma_dienGiai', $ma->ma_dienGiai) }}">{{ old('ma_dienGiai', $ma->ma_dienGiai) }}</textarea>
     </div>
 
     <div class="form-group">
@@ -99,8 +108,8 @@ Hiệu chỉnh món ăn
             <input id="ma_hinhanhlienquan" type="file" name="ma_hinhanhlienquan[]" multiple="multiple">
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Lưu</button>
     <button type="button" class="btn btn-success" onclick=history.back() >Quay lại</button>
+    <button type="submit" class="btn btn-primary">Lưu</button>
 </form>
 @endsection
 

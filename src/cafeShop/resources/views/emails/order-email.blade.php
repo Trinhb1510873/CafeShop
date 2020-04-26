@@ -4,7 +4,7 @@
             <img src="https://nentang.vn/wp-content/uploads/2018/08/logo-nentang.jpg" style="width: 153px; height: 153px;" />
         </td>
         <td style="border-top: 1px solid black;border-bottom: 1px solid black;border-right: 1px solid black; text-align: center; vertical-align: middle; padding: 5px;" colspan="3">
-            <h1 style="color: red;">Shop hoa tươi Sunshine</h1>
+            <h1 style="color: red;">Coffee SunFlower</h1>
         </td>
     </tr>
     <tr>

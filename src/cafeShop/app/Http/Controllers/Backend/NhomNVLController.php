@@ -14,6 +14,11 @@ use function view;
 
 class NhomNVLController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +26,9 @@ class NhomNVLController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_nhomnvl = NhomNVL::all();
         return view('backend.nhomnvl.index')
         ->with('danhsachnhomnvl',$ds_nhomnvl);
@@ -33,6 +41,9 @@ class NhomNVLController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         return view('backend.nhomnvl.create');
     }
 
@@ -44,7 +55,9 @@ class NhomNVLController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'nnvl_ten' => 'required|min:3|max:100',
         ]);
@@ -79,6 +92,9 @@ class NhomNVLController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $nhomnvl = NhomNVL::where("nnvl_id",  $id)->first();
         return view('backend.nhomnvl.edit')
             ->with('nhomnvl', $nhomnvl);
@@ -93,6 +109,9 @@ class NhomNVLController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'nnvl_ten' => 'required|min:3|max:100',
         ]);
@@ -116,6 +135,9 @@ class NhomNVLController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $nhomnvl = NhomNVL::where("nnvl_id",  $id)->first();
         $nhomnvl->delete();
         Session::flash('alert-info', 'Xóa Nhóm nguyên vật liệu thành công ^^~!!!');

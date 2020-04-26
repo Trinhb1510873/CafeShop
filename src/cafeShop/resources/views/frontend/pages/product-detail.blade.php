@@ -2,7 +2,7 @@
 @extends('frontend.layouts.master')
 {{-- Thay thế nội dung vào Placeholder `title` của view `frontend.layouts.master` --}}
 @section('title')
-Sản phẩm Shop Hoa tươi - Sunshine
+Sản phẩm Coffee SunFlower
 @endsection
 {{-- Thay thế nội dung vào Placeholder `custom-css` của view `frontend.layouts.master` --}}
 @section('custom-css')

@@ -15,6 +15,11 @@ use Validator;
 
 class NhomThucDonController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +27,9 @@ class NhomThucDonController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_ntd = NhomThucDon::all();
         return view('backend.nhomthucdon.index')
         ->with('danhsachnhomthucdon', $ds_ntd);
@@ -34,6 +42,9 @@ class NhomThucDonController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $ds_loai = LoaiMonAn::all();
         $ds_bep = Bep::all();
         return view('backend.nhomthucdon.create')
@@ -50,6 +61,9 @@ class NhomThucDonController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'ntd_ten' => 'required|min:3|max:100',
             'ntd_dienGiai' =>'required|min:1|max:1000',
@@ -90,6 +104,9 @@ class NhomThucDonController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $ntd  = NhomThucDon::where("ntd_id",  $id)->first();
         $ds_loai = LoaiMonAn::all();
         $ds_bep = Bep::all();
@@ -108,6 +125,9 @@ class NhomThucDonController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'ntd_ten' => 'required|min:3|max:100',
             'ntd_dienGiai' =>'required|min:1|max:1000',
@@ -136,6 +156,9 @@ class NhomThucDonController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $ntd  = NhomThucDon::where("ntd_id",  $id)->first();
         $ntd->delete();
         Session::flash('alert-info', 'Xóa sản phẩm thành công ^^~!!!');

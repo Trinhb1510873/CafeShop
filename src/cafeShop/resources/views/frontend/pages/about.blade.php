@@ -1,21 +1,17 @@
-{{-- View này sẽ kế thừa giao diện từ `frontend.layouts.master` --}}
 @extends('frontend.layouts.master')
 
-{{-- Thay thế nội dung vào Placeholder `title` của view `frontend.layouts.master` --}}
 @section('title')
 Coffee - Sunflower
 @endsection
 
-{{-- Thay thế nội dung vào Placeholder `custom-css` của view `frontend.layouts.master` --}}
 @section('custom-css')
 @endsection
 
-{{-- Thay thế nội dung vào Placeholder `main-content` của view `frontend.layouts.master` --}}
 @section('main-content')
 <!-- Title page -->
 <section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('{{ asset('themes/cozastore/images/bg-01.jpg') }}');">
-    <h2 class="ltext-105 cl0 txt-center">
-        About
+    <h2 class="ltext-105 cl0 txt-center" style="color: red">
+        Giới thiệu
     </h2>
 </section>
 
@@ -30,7 +26,7 @@ Coffee - Sunflower
                         Our Story
                     </h3>
 
-                    <p class="stext-113 cl6 p-b-26">
+                    <p class="stext-113 cl6 p-b-26" style="text-align: justify;">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat consequat enim, non
                         auctor massa ultrices non. Morbi sed odio massa. Quisque at vehicula tellus, sed tincidunt
                         augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -41,7 +37,7 @@ Coffee - Sunflower
                         condimentum euismod tortor, eget facilisis diam faucibus et. Morbi a tempor elit.
                     </p>
 
-                    <p class="stext-113 cl6 p-b-26">
+                    <p class="stext-113 cl6 p-b-26" style="text-align: justify;">
                         Donec gravida lorem elit, quis condimentum ex semper sit amet. Fusce eget ligula magna. Aliquam
                         aliquam imperdiet sodales. Ut fringilla turpis in vehicula vehicula. Pellentesque congue ac
                         orci ut gravida. Aliquam erat volutpat. Donec iaculis lectus a arcu facilisis, eu sodales
@@ -73,7 +69,7 @@ Coffee - Sunflower
                         Our Mission
                     </h3>
 
-                    <p class="stext-113 cl6 p-b-26">
+                    <p class="stext-113 cl6 p-b-26" style="text-align: justify;">
                         Mauris non lacinia magna. Sed nec lobortis dolor. Vestibulum rhoncus dignissim risus, sed
                         consectetur erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
                         turpis egestas. Nullam maximus mauris sit amet odio convallis, in pharetra magna gravida.
@@ -86,7 +82,7 @@ Coffee - Sunflower
                     </p>
 
                     <div class="bor16 p-l-29 p-b-9 m-t-22">
-                        <p class="stext-114 cl6 p-r-40 p-b-11">
+                        <p class="stext-114 cl6 p-r-40 p-b-11" style="text-align: justify;">
                             Creativity is just connecting things. When you ask creative people how they did something,
                             they feel a little guilty because they didn't really do it, they just saw something. It
                             seemed obvious to them after a while.
@@ -107,7 +103,36 @@ Coffee - Sunflower
                 </div>
             </div>
         </div>
+        <div class="row p-b-148">
+            <div class="col-md-7 col-lg-8">
+                <div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
+                    <h3 class="mtext-111 cl2 p-b-16">
+                        Our Store
+                    </h3>
+
+                    <p class="stext-113 cl6 p-b-26" style="text-align: justify;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat consequat enim, non
+                        auctor massa ultrices non. Morbi sed odio massa. Quisque at vehicula tellus, sed tincidunt
+                        augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        Maecenas varius egestas diam, eu sodales metus scelerisque congue. Pellentesque habitant morbi
+                        tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas gravida justo eu
+                        arcu egestas convallis. Nullam eu erat bibendum, tempus ipsum eget, dictum enim. Donec non
+                        neque ut enim dapibus tincidunt vitae nec augue. Suspendisse potenti. Proin ut est diam. Donec
+                        condimentum euismod tortor, eget facilisis diam faucibus et. Morbi a tempor elit.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-11 col-md-5 col-lg-4 m-lr-auto">
+                <div class="how-bor1 ">
+                    <div class="hov-img0">
+                        <img src="{{ asset('themes/cozastore/images/about-03.jpg') }}" alt="IMG">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
 </section>
 
 @endsection

@@ -11,6 +11,11 @@ use Validator;
 
 class BepController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +23,9 @@ class BepController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('danhmuc_xem')){
+            return view('error.403');
+        }
         $ds_loai = Bep::all();
         return view('backend.bep.index')
                 ->with('danhsachbep',$ds_loai);
@@ -30,6 +38,9 @@ class BepController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         return view('backend.bep.create');
     }
 
@@ -41,6 +52,9 @@ class BepController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('danhmuc_them')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'b_ten' => 'required|min:3|max:50',
         ]);
@@ -75,6 +89,9 @@ class BepController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $b = Bep::where("b_id",  $id)->first();
         return view('backend.bep.edit')
             ->with('b', $b);
@@ -89,6 +106,9 @@ class BepController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('danhmuc_sua')){
+            return view('error.403');
+        }
         $validator = Validator::make($request->all(), [
             'b_ten' => 'required|min:3|max:50',
         ]);
@@ -112,6 +132,9 @@ class BepController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('danhmuc_xoa')){
+            return view('error.403');
+        }
         $b = Bep::where("b_id",  $id)->first();
         $b->delete();
         Session::flash('alert-info', 'Xóa sản phẩm thành công ^^~!!!');

@@ -5,7 +5,11 @@ Hiệu chỉnh cửa hàng
 @endsection
 
 @section('custom-css')
-
+<style>
+    .form-control{
+        width:500px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -24,22 +28,22 @@ Hiệu chỉnh cửa hàng
     {{ csrf_field() }}
     <div class="form-group">
         <label for="ch_ten">Tên cửa hàng</label>
-        <input style="width:300px;"type="text" class="form-control" id="ch_ten" name="ch_ten" value="{{ old('ch_ten', $ch->ch_ten) }}">
+        <input type="text" class="form-control" id="ch_ten" name="ch_ten" value="{{ old('ch_ten', $ch->ch_ten) }}">
     </div>
     <div class="form-group">
         <label for="ch_tenNguoiDaiDien">Tên người đại diện</label>
-        <input style="width:300px;"type="text" class="form-control" id="ch_tenNguoiDaiDien" name="ch_tenNguoiDaiDien" value="{{ old('ch_tenNguoiDaiDien', $ch->ch_tenNguoiDaiDien) }}">
+        <input type="text" class="form-control" id="ch_tenNguoiDaiDien" name="ch_tenNguoiDaiDien" value="{{ old('ch_tenNguoiDaiDien', $ch->ch_tenNguoiDaiDien) }}">
     </div>
     <div class="form-group">
         <label for="ch_diaChi">Địa chỉ</label>
-        <input style="width:300px;"type="text" class="form-control" id="ch_diaChi" name="ch_diaChi" value="{{ old('ch_diaChi', $ch->ch_diaChi) }}">
+        <input type="text" class="form-control" id="ch_diaChi" name="ch_diaChi" value="{{ old('ch_diaChi', $ch->ch_diaChi) }}">
     </div><div class="form-group">
         <label for="ch_soDienThoai">Số điện thoại</label>
-        <input style="width:300px;"type="text" class="form-control" id="ch_soDienThoai" name="ch_soDienThoai" value="{{ old('ch_soDienThoai', $ch->ch_soDienThoai) }}">
+        <input type="text" class="form-control" id="ch_soDienThoai" name="ch_soDienThoai" value="{{ old('ch_soDienThoai', $ch->ch_soDienThoai) }}">
     </div>
     <div class="form-group">
         <label for="ch_maSoThue">Mã số thuế</label>
-        <input style="width:300px;"type="text" class="form-control" id="ch_maSoThue" name="ch_maSoThue" value="{{ old('ch_maSoThue', $ch->ch_maSoThue) }}">
+        <input type="text" class="form-control" id="ch_maSoThue" name="ch_maSoThue" value="{{ old('ch_maSoThue', $ch->ch_maSoThue) }}">
     </div>
     <button type="submit" class="btn btn-primary">Lưu</button>
     <button type="button" class="btn btn-success" onclick=history.back() >Quay lại</button>
