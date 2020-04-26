@@ -28,7 +28,7 @@ class PermissionSeeder extends Seeder
         $permission_danhmuc_pdf = Permission::create(['name' => 'pdf']);
 
         //cap quyen cho vai tro
-        $role_quan_tri->givePermissionTo(array($permission_danhmuc_xem, $permission_danhmuc_them, $permission_danhmuc_sua, $permission_danhmuc_xoa));
+        $role_quan_tri->givePermissionTo(array($permission_danhmuc_xem, $permission_danhmuc_them, $permission_danhmuc_sua, $permission_danhmuc_xoa, $permission_order));
         $role_quan_tri->givePermissionTo(array($permission_danhmuc_print, $permission_danhmuc_excel, $permission_danhmuc_pdf));
         $role_user->givePermissionTo($permission_order);
 
